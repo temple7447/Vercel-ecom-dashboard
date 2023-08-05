@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Box = () => {
+const Box = ({ProductNumber}) => {
     return (
         <>
 
@@ -33,8 +33,8 @@ const Box = () => {
                 <li>
                     <i className='bx bxs-group' ></i>
                     <span className="text">
-                        <h3>2834</h3>
-                        <p>Visitors</p>
+                        <h3>{ProductNumber}</h3>
+                        <p>Products</p>
                     </span>
                 </li>
                 <li>

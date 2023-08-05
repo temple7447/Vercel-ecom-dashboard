@@ -1,19 +1,20 @@
-import{ useState, useEffect } from 'react'
+import{ useState, useEffect , useContext} from 'react'
 import './Style.css'
 import Box from '../Multi/Box';
 import firebase, { app, database, storage, auth } from '../../firebase'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import { MyContext } from '../AppProvider';
 import { options } from '../Data/Categories'
 import axios from 'axios';
 import Modal from 'react-modal';
-
+import SuccessModal from './Modal';
 
 
 
 const Store = () => {
-
-
+const { ProductNumber} = useContext(MyContext)
+const [successModalOpen, setSuccessModalOpen] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
     const storage = getStorage();
 
 
@@ -28,6 +29,7 @@ const Store = () => {
     const [isButtonClicked, setButtonClicked] = useState(false);
 
 
+
     const openModal = (image) => {
         setSelectedImage(image);
         setModalIsOpen(true);
@@ -38,7 +40,9 @@ const Store = () => {
         setModalIsOpen(false);
     };
 
-
+    const closeSuccessModal = () => {
+        setSuccessModalOpen(false);
+      };
 
 
   
@@ -54,6 +58,7 @@ const Store = () => {
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true)
 
         const requestData = {
             selectedOption,
@@ -67,6 +72,14 @@ const Store = () => {
         try {
             const response = await axios.post("https://charming-cod-gaiters.cyclic.app/upload_Categories", requestData);
             console.log('Request was successful:', response.data);
+            setSelectedOption('');
+            setTitleFields('')
+            setdescriptionFields('')
+            setpriceFields('')
+            setSubselectedOption('')
+            setDownloadUrls([])
+            setSuccessModalOpen(true);
+            setIsLoading(false)
         } catch (error) {
             console.error('An error occurred:', error);
         }
@@ -81,12 +94,6 @@ const Store = () => {
     //     setsubselectedOption(event.target.value)
     // };
 
-    useEffect(() => {
-
-        axios.get('https://charming-cod-gaiters.cyclic.app/upload_Categories')
-            .then((res) => { console.log(res.data) })
-            .catch((error) => console.log(error))
-    }, [])
 
 
     const handleFileUpload = async (event) => {
@@ -151,7 +158,7 @@ const Store = () => {
     return (
         <main>
 
-            <Box />
+            <Box  ProductNumber={ProductNumber}/>
 
             <div className="form-container">
                 <label htmlFor="categories">
@@ -238,6 +245,7 @@ const Store = () => {
                     {isButtonClicked ? 'Uploaded...' : 'Post Ads'}
                 </button>
             </div>
+            <SuccessModal isOpen={successModalOpen} onClose={closeSuccessModal} isLoading={isLoading}  />
 
         </main>
     )
