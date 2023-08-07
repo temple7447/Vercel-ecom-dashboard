@@ -17,7 +17,7 @@ export const MyContextProvider = ({ children }) => {
 
         axios.get('https://charming-cod-gaiters.cyclic.app/upload_Categories')
             .then((res) => { 
-                console.log(res.data)
+                // console.log(res.data)
                 setProductNumber(res.data.length)
              })
             .catch((error) => console.log(error))

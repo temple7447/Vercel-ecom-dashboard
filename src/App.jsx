@@ -10,6 +10,8 @@ import { MyContextProvider } from './AppProvider'
 import { Route, Routes } from 'react-router-dom'
 import DashBoard from './Main/DashBoard'
 import Store from './Main/Store'
+import StoreData from './Main/StoreData'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,7 +22,8 @@ function App() {
 
         <Route path='/' element={< Unique />} >
           <Route index element={<DashBoard />} />
-          <Route path='/Store' element={<Store />} />
+          <Route path='Upload' element={<Store />} />
+          <Route path='Store' element={<StoreData />} />
         </Route>
       </Routes>
 

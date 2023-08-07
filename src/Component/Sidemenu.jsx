@@ -23,6 +23,7 @@ const Sidemenu = () => {
     const menuItems = [
         { text: 'Dashboard', icon: 'bxs-dashboard', to: '/' },
         { text: 'My Store', icon: 'bxs-shopping-bag-alt', to: '/Store' },
+{ text: 'Upload Data', icon: 'bxs-shopping-bag', to: '/Upload' },
         // Add more menu items as needed
     ];
 
